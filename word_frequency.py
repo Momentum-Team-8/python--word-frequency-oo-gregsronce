@@ -1,3 +1,7 @@
+import string
+
+import random
+
 STOP_WORDS = [
     'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'has',
     'he', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
@@ -6,35 +10,48 @@ STOP_WORDS = [
 
 
 class FileReader:
-    def __init__(self, filename):
-        pass
+    def __init__(self, filename='one-today.txt'):
+        self.filename = filename
 
     def read_contents(self):
         """
         This should read all the contents of the file
-        and return them as one string.
+        and return them as one string, lowercasing the  
+        text and get all the words from the text.
         """
-        raise NotImplementedError("FileReader.read_contents")
+        with open(self.filename) as file:
+            text = file.read().lower()
+            return text
+
+
+file = FileReader()
+print(file.read_contents())
 
 
 class WordList:
     def __init__(self, text):
-        pass
+        self.text = text
 
-    def extract_words(self):
+    def remove_punctuation(self, text):
         """
-        This should get all words from the text. This method
-        is responsible for lowercasing all words and stripping
-        them of punctuation.
+        This method
+        is responsible for stripping
+        words of punctuation.
         """
-        raise NotImplementedError("WordList.extract_words")
-
+        new_text_string = ""
+        punctuation = """!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"""
+        for word in self.text:
+            if word not in punctuation:
+                new_text_string += word
+        return new_text_string
+    
     def remove_stop_words(self):
         """
         Removes all stop words from our word list. Expected to
         be run after extract_words.
         """
-        raise NotImplementedError("WordList.remove_stop_words")
+        # words_to_count = []
+        # for word in file
 
     def get_freqs(self):
         """
@@ -43,8 +60,11 @@ class WordList:
         extract_words and remove_stop_words. The data structure
         could be a dictionary or another type of object.
         """
-        raise NotImplementedError("WordList.get_freqs")
 
+list_of_words = WordList()
+print(list_of_words.remove_punctuation())
+# # print(list_of_words.remove_stop_words())
+# # print(list_of_words.get_freqs())
 
 class FreqPrinter:
     def __init__(self, freqs):
